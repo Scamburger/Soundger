@@ -1,7 +1,8 @@
 package ru.scamburger.Soundger.dao;
 
-import org.springframework.security.core.userdetails.UserDetails;
+
+import ru.scamburger.Soundger.entity.User;
 
 public interface UserDao {
-    UserDetails getUserByUsername(String username);
+    User getUserByUsername(String username);
 }
