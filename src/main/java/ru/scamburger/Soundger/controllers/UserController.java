@@ -20,7 +20,7 @@ public class UserController {
     @GetMapping("/deleteUser")
     @Transactional
     public User deleteUser() {
-        entityManager.createQuery("delete from AuthToken where user_id=1").executeUpdate();
+        entityManager.createQuery("delete from AuthToken where user_id=2").executeUpdate();
         return new User();
     }
 
