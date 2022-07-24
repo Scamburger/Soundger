@@ -10,10 +10,12 @@ import java.util.Date;
 public class AuthToken {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long user_id;
 
-    @OneToOne(mappedBy="authToken", cascade=CascadeType.ALL)
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
     private User user;
 
     private String token;

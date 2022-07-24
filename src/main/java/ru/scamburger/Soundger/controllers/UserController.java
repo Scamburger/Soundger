@@ -16,20 +16,20 @@ public class UserController {
     @PersistenceContext
     private EntityManager entityManager;
 
-    //Контролер для теста создания Юзера, назначения роли и присвоения AuthToken'a
-    @GetMapping("/random")
+    //Контролер для теста удаления authToken
+    @GetMapping("/deleteUser")
     @Transactional
-    public User addUser() {
-
+    public User deleteUser() {
         entityManager.createQuery("delete from AuthToken where user_id=1").executeUpdate();
         return new User();
     }
 
-    @GetMapping("/test")
+    //Контролер для теста создания Юзера
+    @GetMapping("/addUser")
     @Transactional
-    public String testController() {
-                User user=new User();
-                AuthToken authToken=new AuthToken();
+    public String addUser() {
+        User user=new User();
+        AuthToken authToken=new AuthToken();
         authToken.setToken("random token");
         authToken.setExpiredAt(new Date());
         user.setUsername("root");
