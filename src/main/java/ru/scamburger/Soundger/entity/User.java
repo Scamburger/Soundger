@@ -18,9 +18,6 @@ public class User{
 
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER )
-    private Set<Role> roles;
-
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private AuthToken authToken;
