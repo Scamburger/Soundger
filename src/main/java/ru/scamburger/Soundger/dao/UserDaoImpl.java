@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.scamburger.Soundger.entity.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 @Repository
@@ -13,7 +14,7 @@ public class UserDaoImpl implements UserDao{
     private EntityManager entityManager;
 
     @Override
-    public User getUserByUsername(String username) {
+    public User getUserByUsername(String username) throws NoResultException {
         return (User)entityManager.createQuery("select u from User as u where u.username = :usernameParam")
                 .setParameter("usernameParam",username)
                 .getSingleResult();
