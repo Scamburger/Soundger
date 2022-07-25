@@ -25,9 +25,4 @@ public class User{
 
     public User() {
     }
-
-    public void setAuthToken(AuthToken authToken) {
-        authToken.setUser(this);
-        this.authToken = authToken;
-    }
 }
