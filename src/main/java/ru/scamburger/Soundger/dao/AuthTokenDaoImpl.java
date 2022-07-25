@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.scamburger.Soundger.entity.AuthToken;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 @Repository
 public class AuthTokenDaoImpl implements AuthTokenDao{
@@ -13,10 +14,10 @@ public class AuthTokenDaoImpl implements AuthTokenDao{
     private EntityManager entityManager;
 
     @Override
-    public AuthToken getByToken(String token) {
-        return (AuthToken) entityManager.createQuery("select a from AuthToken as a where a.token=:tokenParam")
-                .setParameter("tokenParam", token)
-                .getSingleResult();
+    public AuthToken getByToken(String token) throws NoResultException{
+            return (AuthToken) entityManager.createQuery("select a from AuthToken as a where a.token=:tokenParam")
+                    .setParameter("tokenParam", token)
+                    .getSingleResult();
     }
 
     @Override

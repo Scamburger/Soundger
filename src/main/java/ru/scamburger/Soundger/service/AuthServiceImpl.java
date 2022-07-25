@@ -28,23 +28,19 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthToken authorize(String username, String password) throws UnauthorizedException {
         AuthToken authToken = null;
-        try {
-            User user = userDao.getUserByUsername(username);
-            if(!user.getPassword().equals(password)){
-                throw new UnauthorizedException();
-            }
-            if (user.getAuthToken() != null) {
-                authTokenDao.removeAuthTokenByToken(user.getAuthToken().getToken());
-               user.setAuthToken(null);
-            }
-            authToken = new AuthToken();
-            authToken.setToken(UUID.randomUUID().toString());
-            authToken.setExpiredAt(new Date(new Date().getTime() + tokenLifetimeInMilliseconds));
-            authToken.setUser(user);
-            authTokenDao.saveAuthToken(authToken);
-        } catch (NoResultException e) {
-            throw e;
+        User user = userDao.getUserByUsername(username);
+        if (!user.getPassword().equals(password)) {
+            throw new UnauthorizedException();
         }
+        if (user.getAuthToken() != null) {
+            authTokenDao.removeAuthTokenByToken(user.getAuthToken().getToken());
+            user.setAuthToken(null);
+        }
+        authToken = new AuthToken();
+        authToken.setToken(UUID.randomUUID().toString());
+        authToken.setExpiredAt(new Date(new Date().getTime() + tokenLifetimeInMilliseconds));
+        authToken.setUser(user);
+        authTokenDao.saveAuthToken(authToken);
         return authToken;
     }
 
@@ -56,8 +52,7 @@ public class AuthServiceImpl implements AuthService {
                 return false;
             }
         } catch (NoResultException e) {
-            e.printStackTrace();
-            return true;
+            throw e;
         }
         return true;
     }
@@ -65,10 +60,6 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public void logout(String token) {
-        try {
             authTokenDao.removeAuthTokenByToken(token);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
