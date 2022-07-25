@@ -7,22 +7,27 @@ import java.util.Set;
 
 @Entity
 @Data
-@Table(name="\"user\"")
+@Table(name="users")
 public class User{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
     private String username;
 
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private AuthToken authToken;
 
     public User() {
     }
 
+    public void setAuthToken(AuthToken authToken) {
+        authToken.setUser(this);
+        this.authToken = authToken;
+    }
 }
