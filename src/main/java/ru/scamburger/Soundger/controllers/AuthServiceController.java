@@ -3,6 +3,8 @@ package ru.scamburger.Soundger.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import ru.scamburger.Soundger.dto.AuthTokenResponseDto;
 import ru.scamburger.Soundger.dto.UserCredentialsDto;
 import ru.scamburger.Soundger.entity.AuthToken;
 import ru.scamburger.Soundger.exception.UnauthorizedException;
@@ -11,7 +13,7 @@ import ru.scamburger.Soundger.service.AuthService;
 import javax.persistence.NoResultException;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 public class AuthServiceController {
 
     private final AuthService authService;
@@ -20,22 +22,23 @@ public class AuthServiceController {
         this.authService = authService;
     }
 
-    @GetMapping("/auth/login")
-    public ResponseEntity<String> login(@RequestBody UserCredentialsDto userCredentialsDto){
+    @PostMapping("/login")
+    public ResponseEntity<AuthTokenResponseDto> login(@RequestBody UserCredentialsDto userCredentialsDto){
         try {
             AuthToken authToken = authService.authorize(userCredentialsDto.getUsername(),userCredentialsDto.getPassword());
-            return new ResponseEntity<>(authToken.getToken(), HttpStatus.OK);
+            AuthTokenResponseDto authTokenResponseDto=new AuthTokenResponseDto();
+            authTokenResponseDto.setToken(authToken.getToken());
+            return new ResponseEntity<>(authTokenResponseDto, HttpStatus.OK);
         } catch (UnauthorizedException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>("unauthorized",HttpStatus.UNAUTHORIZED);
+            throw  new ResponseStatusException(HttpStatus.UNAUTHORIZED,"USER UNAUTHORIZED");
         }
         catch (NoResultException ex){
             ex.printStackTrace();
-            return new ResponseEntity<>("not found",HttpStatus.NOT_FOUND);
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND,"USER NOT FOUND");
         }
     }
 
-    @GetMapping("/auth/logout")
+    @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestParam(name = "token") String token){
         try {
             if (!authService.isAuthorized(token)) {

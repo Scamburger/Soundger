@@ -46,14 +46,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean isAuthorized(String token) {
-        try {
             AuthToken authToken = authTokenDao.getByToken(token);
             if (authToken.getExpiredAt().after(new Date())) {
                 return false;
             }
-        } catch (NoResultException e) {
-            throw e;
-        }
         return true;
     }
 
