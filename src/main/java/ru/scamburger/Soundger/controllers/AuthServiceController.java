@@ -45,11 +45,11 @@ public class AuthServiceController {
                 authService.logout(token);
                 return new ResponseEntity<>("logout complete", HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("token expired at", HttpStatus.NOT_FOUND);
+                throw  new ResponseStatusException(HttpStatus.NOT_FOUND,"TOKEN EXPIRED AT");
             }
         }
         catch (NoResultException e){
-            return new ResponseEntity<>("token not found",HttpStatus.NOT_FOUND);
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND,"TOKEN NOT FOUND");
         }
         }
     }
