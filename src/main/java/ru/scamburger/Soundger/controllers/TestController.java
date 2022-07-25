@@ -4,7 +4,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.scamburger.Soundger.exception.UnauthorizedException;
-import ru.scamburger.Soundger.service.AuthTokenService;
+import ru.scamburger.Soundger.service.AuthService;
 import ru.scamburger.Soundger.entity.User;
 
 import javax.persistence.EntityManager;
@@ -15,9 +15,9 @@ public class TestController {
 
     @PersistenceContext
     private EntityManager entityManager;
-    private final AuthTokenService authTokenDao;
+    private final AuthService authTokenDao;
 
-    public TestController(AuthTokenService authTokenDao) {
+    public TestController(AuthService authTokenDao) {
         this.authTokenDao = authTokenDao;
     }
 
@@ -53,7 +53,7 @@ public class TestController {
 
     @GetMapping("/testfindauth")
     public String findAuthToken(){
-        if(!authTokenDao.tryAuthorize("125d4280-f059-4167-904a-247386c233ee")){
+        if(!authTokenDao.tryAuthorize("342af481-e953-44c3-974f-8151717b06c1")){
             return "false account not expired";
         }
         else {
@@ -63,7 +63,7 @@ public class TestController {
 
     @GetMapping("/logout")
     public String logout(){
-        authTokenDao.logout("125d4280-f059-4167-904a-247386c233ee");
+        authTokenDao.logout("342af481-e953-44c3-974f-8151717b06c1");
         return "logouted";
     }
 

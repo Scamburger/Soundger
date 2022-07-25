@@ -11,13 +11,6 @@ public class AuthTokenDaoImpl implements AuthTokenDao{
 
     @PersistenceContext
     private EntityManager entityManager;
-    @Override
-    @Transactional
-    public void removeAuthTokenByUserId(Long user_id) {
-        entityManager.clear();
-        entityManager.createQuery("delete from AuthToken as a where a.user_id=:userIdParam")
-                .setParameter("userIdParam", user_id).executeUpdate();
-    }
 
     @Override
     public AuthToken getByToken(String token) {
@@ -27,9 +20,17 @@ public class AuthTokenDaoImpl implements AuthTokenDao{
     }
 
     @Override
+    @Transactional
     public void removeAuthTokenByToken(String token) {
+        entityManager.clear();
         entityManager.createQuery("delete from AuthToken as a where a.token=:tokenParam")
                 .setParameter("tokenParam", token)
                 .executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public void saveAuthToken(AuthToken authToken) {
+        entityManager.merge(authToken);
     }
 }

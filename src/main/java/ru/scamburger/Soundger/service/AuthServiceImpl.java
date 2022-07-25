@@ -1,7 +1,5 @@
 package ru.scamburger.Soundger.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.scamburger.Soundger.dao.AuthTokenDao;
@@ -10,19 +8,19 @@ import ru.scamburger.Soundger.entity.AuthToken;
 import ru.scamburger.Soundger.entity.User;
 import ru.scamburger.Soundger.exception.UnauthorizedException;
 
-import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 import java.util.Date;
 import java.util.UUID;
 
 @Service
-public class AuthTokenServiceImpl implements AuthTokenService {
+public class AuthServiceImpl implements AuthService {
 
     private final UserDao userDao;
     private final AuthTokenDao authTokenDao;
 
-    public AuthTokenServiceImpl(UserDao userDao, AuthTokenDao authTokenDao) {
+    private final int tokenLifetimeInMilliseconds = 1000 * 60 * 60 * 24;
+
+    public AuthServiceImpl(UserDao userDao, AuthTokenDao authTokenDao) {
         this.userDao = userDao;
         this.authTokenDao = authTokenDao;
     }
@@ -36,13 +34,14 @@ public class AuthTokenServiceImpl implements AuthTokenService {
                 throw new UnauthorizedException();
             }
             if (user.getAuthToken() != null) {
-               authTokenDao.removeAuthTokenByUserId(user.getId());
+               authTokenDao.removeAuthTokenByToken(user.getAuthToken().getToken());
+               user.setAuthToken(null);
             }
             authToken = new AuthToken();
             authToken.setToken(UUID.randomUUID().toString());
-            authToken.setExpiredAt(new Date(new Date().getTime() + (1000 * 60 * 60 * 24)));
-            user.setAuthToken(authToken);
-            userDao.saveUser(user);
+            authToken.setExpiredAt(new Date(new Date().getTime() + tokenLifetimeInMilliseconds));
+            authToken.setUser(user);
+            authTokenDao.saveAuthToken(authToken);
         } catch (NoResultException e) {
             e.printStackTrace();
         }
