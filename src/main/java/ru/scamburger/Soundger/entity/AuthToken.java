@@ -13,7 +13,7 @@ public class AuthToken {
     @Column(name = "user_id")
     private Long user_id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     @MapsId
     @JoinColumn(name = "user_id")
     private User user;
