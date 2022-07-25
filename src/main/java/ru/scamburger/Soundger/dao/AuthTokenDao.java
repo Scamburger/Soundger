@@ -3,9 +3,10 @@ package ru.scamburger.Soundger.dao;
 import ru.scamburger.Soundger.entity.AuthToken;
 
 public interface AuthTokenDao {
-    AuthToken authorize(String username, String password);
 
-    boolean tryAuthorize(String token);
+    void removeAuthTokenByUserId(Long user_id);
 
-    void logout(String token);
+    AuthToken getByToken(String token);
+
+    void removeAuthTokenByToken(String token);
 }
