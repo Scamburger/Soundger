@@ -6,7 +6,7 @@ import ru.scamburger.Soundger.exception.UnauthorizedException;
 public interface AuthService {
     AuthToken authorize(String username, String password) throws UnauthorizedException;
 
-    boolean tryAuthorize(String token);
+    boolean isAuthorized(String token);
 
     void logout(String token);
 }

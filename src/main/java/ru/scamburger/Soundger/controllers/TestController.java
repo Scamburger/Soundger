@@ -15,10 +15,10 @@ public class TestController {
 
     @PersistenceContext
     private EntityManager entityManager;
-    private final AuthService authTokenDao;
+    private final AuthService authService;
 
-    public TestController(AuthService authTokenDao) {
-        this.authTokenDao = authTokenDao;
+    public TestController(AuthService authService) {
+        this.authService = authService;
     }
 
     //Контролер для теста удаления authToken
@@ -43,7 +43,7 @@ public class TestController {
     @GetMapping("/addauthtoken")
     public String testAuth(){
         try {
-            authTokenDao.authorize("root","root");
+            authService.authorize("root","root");
         } catch (UnauthorizedException e) {
            e.getStackTrace();
            return "Unauthorized";
@@ -53,7 +53,7 @@ public class TestController {
 
     @GetMapping("/testfindauth")
     public String findAuthToken(){
-        if(!authTokenDao.tryAuthorize("342af481-e953-44c3-974f-8151717b06c1")){
+        if(!authService.isAuthorized("342af481-e953-44c3-974f-8151717b06c1")){
             return "false account not expired";
         }
         else {
@@ -63,7 +63,7 @@ public class TestController {
 
     @GetMapping("/logout")
     public String logout(){
-        authTokenDao.logout("342af481-e953-44c3-974f-8151717b06c1");
+        authService.logout("342af481-e953-44c3-974f-8151717b06c1");
         return "logouted";
     }
 

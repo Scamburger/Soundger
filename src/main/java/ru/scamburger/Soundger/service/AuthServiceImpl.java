@@ -16,13 +16,13 @@ import java.util.UUID;
 public class AuthServiceImpl implements AuthService {
 
     private final UserDao userDao;
-    private final AuthTokenDao authTokenDao;
+    private final AuthTokenDao authService;
 
     private final int tokenLifetimeInMilliseconds = 1000 * 60 * 60 * 24;
 
-    public AuthServiceImpl(UserDao userDao, AuthTokenDao authTokenDao) {
+    public AuthServiceImpl(UserDao userDao, AuthTokenDao authService) {
         this.userDao = userDao;
-        this.authTokenDao = authTokenDao;
+        this.authService = authService;
     }
 
     @Override
@@ -34,29 +34,30 @@ public class AuthServiceImpl implements AuthService {
                 throw new UnauthorizedException();
             }
             if (user.getAuthToken() != null) {
-               authTokenDao.removeAuthTokenByToken(user.getAuthToken().getToken());
+                authService.removeAuthTokenByToken(user.getAuthToken().getToken());
                user.setAuthToken(null);
             }
             authToken = new AuthToken();
             authToken.setToken(UUID.randomUUID().toString());
             authToken.setExpiredAt(new Date(new Date().getTime() + tokenLifetimeInMilliseconds));
             authToken.setUser(user);
-            authTokenDao.saveAuthToken(authToken);
+            authService.saveAuthToken(authToken);
         } catch (NoResultException e) {
-            e.printStackTrace();
+            throw new NoResultException();
         }
         return authToken;
     }
 
     @Override
-    public boolean tryAuthorize(String token) {
+    public boolean isAuthorized(String token) {
         try {
-            AuthToken authToken = authTokenDao.getByToken(token);
+            AuthToken authToken = authService.getByToken(token);
             if (authToken.getExpiredAt().after(new Date())) {
                 return false;
             }
         } catch (NoResultException e) {
             e.printStackTrace();
+            return true;
         }
         return true;
     }
@@ -65,7 +66,7 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public void logout(String token) {
         try {
-            authTokenDao.removeAuthTokenByToken(token);
+            authService.removeAuthTokenByToken(token);
         } catch (Exception e) {
             e.printStackTrace();
         }
