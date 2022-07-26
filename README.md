@@ -1,5 +1,5 @@
 # Soundger
-**Soundger** is free an analog of Spotify.
+**Soundger** is a free analog of Spotify.
 The project is currently under development
 
 ## Stack / Dependencies
