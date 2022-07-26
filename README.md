@@ -4,12 +4,12 @@ Hello, folks! <img src="https://raw.githubusercontent.com/MartinHeinz//MartinHei
 The project is currently under development
 
 ## Stack / Dependencies
-* PostgreSQL
+* ![](https://img.shields.io/badge/DB-PostgreSQL-informational?style=flat&logo=PostgreSQL&logoColor=white&color=42C1BA)
 * ![](https://img.shields.io/badge/Stack-SpringWeb-informational?style=flat&logo=spring&logoColor=white&color=42C1BA)
 * ![](https://img.shields.io/badge/Stack-SpringData-informational?style=flat&logo=spring&logoColor=white&color=42C1BA)
 * ![](https://img.shields.io/badge/Stack-SpringAOP-informational?style=flat&logo=spring&logoColor=white&color=42C1BA)
 * ![](https://img.shields.io/badge/Stack-SpringData-informational?style=flat&logo=spring&logoColor=white&color=42C1BA)
-* Flyway
+* ![](https://img.shields.io/badge/Migration-Flyway-informational?style=flat&logoColor=white&color=42C1BA)
 
 ## Developer team
 * <a href="https://github.com/bubuntoid" target="_blank">Dmitriy Stafeev</a> ![](https://img.shields.io/badge/Role:-FS,TL-informational?style=flat&logoColor=white&color=42C1BA)
