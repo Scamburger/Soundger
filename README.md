@@ -11,6 +11,6 @@ The project is currently under development
 * Flyway
 
 ## Developer team
-* Dmitriy Stafeev @bubuntoid
-* Roman Sofinskiy
-* Evgeniy Solonov
+* Dmitriy Stafeev FS/TL
+* Roman Sofinskiy BD
+* Evgeniy Solonov BD
