@@ -8,7 +8,6 @@ import ru.scamburger.Soundger.entity.AuthToken;
 import ru.scamburger.Soundger.entity.User;
 import ru.scamburger.Soundger.exception.UnauthorizedException;
 
-import javax.persistence.NoResultException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -48,9 +47,9 @@ public class AuthServiceImpl implements AuthService {
     public boolean isAuthorized(String token) {
             AuthToken authToken = authTokenDao.getByToken(token);
             if (authToken.getExpiredAt().after(new Date())) {
-                return false;
+                return true;
             }
-        return true;
+        return false;
     }
 
     @Override

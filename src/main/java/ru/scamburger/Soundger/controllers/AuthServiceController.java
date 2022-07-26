@@ -44,12 +44,8 @@ public class AuthServiceController {
     @Authorized
     public ResponseEntity<String> logout(@RequestHeader("Authorization") String token){
         try {
-            if (!authService.isAuthorized(token)) {
                 authService.logout(token);
                 return new ResponseEntity<>("logout complete", HttpStatus.OK);
-            } else {
-                throw  new ResponseStatusException(HttpStatus.NOT_FOUND,"TOKEN EXPIRED AT");
-            }
         }
         catch (NoResultException e){
             throw  new ResponseStatusException(HttpStatus.NOT_FOUND,"TOKEN NOT FOUND");

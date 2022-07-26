@@ -9,5 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Authorized {
 
-    boolean isAuthorize() default true;
+    boolean isAuthorize() default false;
 }

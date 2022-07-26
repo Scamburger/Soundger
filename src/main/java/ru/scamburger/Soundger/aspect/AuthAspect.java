@@ -36,9 +36,9 @@ public class AuthAspect {
              authorize=authService.isAuthorized(getRequest().getHeader("Authorization"));
         }
         catch (NoResultException e){
-            authorize=true;
+           throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Token not found");
         }
-            if (!authorize) {
+            if (authorize) {
             } else {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN,"User unauthorized");
             }
