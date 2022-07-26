@@ -11,6 +11,6 @@ The project is currently under development
 * Flyway
 
 ## Developer team
-* Dmitriy Stafeev FS/TL
-* Roman Sofinskiy BD
-* Evgeniy Solonov BD
+* <a href="https://github.com/bubuntoid" target="_blank">Dmitriy Stafeev</a> FS/TL
+* <a href="https://github.com/NAilerStrikes228" target="_blank">Roman Sofinskiy</a>  BD
+* <a href="https://github.com/listanuv" target="_blank">Evgeniy Solonov</a> BD
