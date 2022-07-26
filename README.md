@@ -1,6 +1,9 @@
 # Soundger
+
 Hello, folks! <img src="https://raw.githubusercontent.com/MartinHeinz//MartinHeinz/master/wave.gif" width="30px">
+
 **Soundger** is a free analog of Spotify.
+
 The project is currently under development
 
 ## Stack / Dependencies
