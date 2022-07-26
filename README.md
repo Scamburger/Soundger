@@ -5,10 +5,10 @@ The project is currently under development
 
 ## Stack / Dependencies
 * PostgreSQL
-* Spring Web
-![](https://img.shields.io/badge/Stack-SpringData-informational?style=flat&logo=spring&logoColor=white&color=42C1BA)
-* Spring AOP
-* Project Lombok
+* ![](https://img.shields.io/badge/Stack-Spring-Web-informational?style=flat&logo=spring&logoColor=white&color=42C1BA)
+* ![](https://img.shields.io/badge/Stack-Spring-Data-informational?style=flat&logo=spring&logoColor=white&color=42C1BA)
+* ![](https://img.shields.io/badge/Stack-Spring-AOP-informational?style=flat&logo=spring&logoColor=white&color=42C1BA)
+* ![](https://img.shields.io/badge/Stack-Spring-Data-informational?style=flat&logo=spring&logoColor=white&color=42C1BA)
 * Flyway
 
 ## Developer team
