@@ -10,3 +10,7 @@ The project is currently under development
 * Project Lombok
 * Flyway
 
+## Developer team
+* Dmitriy Stafeev @bubuntoid
+* Roman Sofinskiy
+* Evgeniy Solonov
