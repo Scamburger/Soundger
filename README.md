@@ -6,7 +6,7 @@ The project is currently under development
 ## Stack / Dependencies
 * PostgreSQL
 * Spring Web
-* ![](https://img.shields.io/badge/Stack-Spring Data-informational?style=flat&logo=spring&logoColor=white&color=42C1BA)
+![](https://img.shields.io/badge/Stack-Spring Data-informational?style=flat&logo=spring&logoColor=white&color=42C1BA)
 * Spring AOP
 * Project Lombok
 * Flyway
