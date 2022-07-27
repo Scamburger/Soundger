@@ -3,7 +3,6 @@ package ru.scamburger.Soundger.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-//fuckk
 @Entity
 @Data
 public class AudioTrack {
@@ -12,15 +11,12 @@ public class AudioTrack {
         @GeneratedValue (strategy = GenerationType.IDENTITY)
         private Long id;
 
-        @ManyToOne (cascade = CascadeType.MERGE)
-        @JoinColumn(name = "UploadedByUserId")
+        @ManyToOne (cascade = CascadeType.ALL)
         private User user;
 
         private String filePath;
 
         private int length;
-
-
 
 }
 
