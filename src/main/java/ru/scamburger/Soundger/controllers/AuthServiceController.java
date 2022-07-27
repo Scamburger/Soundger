@@ -46,9 +46,7 @@ public class AuthServiceController {
     public void logout() {
         try {
             authService.logout();
-        } catch (NoResultException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
-        } catch (UnauthorizedException e) {
+        } catch (NoResultException | UnauthorizedException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
     }
@@ -57,11 +55,6 @@ public class AuthServiceController {
     @Authorized
     public ResponseEntity<CurrentUserResponseDto> current() {
         User currentUser = authService.getCurrentUser();
-        return new ResponseEntity<CurrentUserResponseDto>(new CurrentUserResponseDto() {
-            {
-                username = currentUser.getPassword();
-                id = currentUser.getId();
-            }
-        }, HttpStatus.OK);
+        return new ResponseEntity<>(new CurrentUserResponseDto(currentUser), HttpStatus.OK);
     }
 }
