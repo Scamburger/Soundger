@@ -36,7 +36,7 @@ public class TestController {
     public String addUser() {
         User user=new User();
         user.setUsername("root");
-        user.setPassword("root");
+        user.setPassword("xfk1ZvguvewaSSNvTqqOCNjv0gEZuym3m21JnHNK9YBFTsGg15ri5xWd1oOPVVtY");
         entityManager.merge(user);
         return "I hate java";
     }
