@@ -19,6 +19,8 @@ public class AuthServiceImpl implements AuthService {
 
     private final int tokenLifetimeInMilliseconds = 1000 * 60 * 60 * 24;
 
+    private User authorizedUser;
+
     public AuthServiceImpl(UserDao userDao, AuthTokenDao authTokenDao) {
         this.userDao = userDao;
         this.authTokenDao = authTokenDao;
@@ -40,21 +42,35 @@ public class AuthServiceImpl implements AuthService {
         authToken.setExpiredAt(new Date(new Date().getTime() + tokenLifetimeInMilliseconds));
         authToken.setUser(user);
         authTokenDao.saveAuthToken(authToken);
+        authorizedUser = user;
         return authToken;
     }
 
     @Override
     public boolean isAuthorized(String token) {
-            AuthToken authToken = authTokenDao.getByToken(token);
-            if (authToken.getExpiredAt().after(new Date())) {
-                return true;
-            }
+        AuthToken authToken = authTokenDao.getByToken(token);
+        if (authToken.getExpiredAt().after(new Date())) {
+            authorizedUser = authToken.getUser();
+            return true;
+        }
+
+        // todo: throw UnauthorizedExpcetion instead of boolean as well as others
+        // methods do in this class?
         return false;
     }
 
     @Override
     @Transactional
-    public void logout(String token) {
-            authTokenDao.removeAuthTokenByToken(token);
+    public void logout() throws UnauthorizedException {
+        if (authorizedUser == null) {
+            throw new UnauthorizedException();
+        }
+        authTokenDao.removeAuthTokenByToken(authorizedUser.getAuthToken().getToken());
     }
+
+    @Override
+    public User getCurrentUser() {
+        return authorizedUser;
+    }
+
 }

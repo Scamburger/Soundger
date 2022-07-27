@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 @Configuration
 public class AuthAspect {
 
+    private static final String HEADER_NAME = "Soundger-Authorization";
     private final AuthService authService;
 
     public AuthAspect(AuthService authService) {
@@ -27,20 +28,27 @@ public class AuthAspect {
         return sra.getRequest();
     }
 
-
-
     @Before("@annotation(ru.scamburger.Soundger.annotation.Authorized)")
-    public void before(){
-        boolean authorize;
+    public void before() {
+        // Trying to read header value from http request
+        String token = getRequest().getHeader(HEADER_NAME);
+
+        // If there is no header in request or value is empty we should return error
+        if (token == null || token.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Method requires header 'Authorization'");
+        }
+
         try {
-             authorize=authService.isAuthorized(getRequest().getHeader("Authorization"));
-        }
-        catch (NoResultException e){
-           throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Token not found");
-        }
-            if (authorize) {
-            } else {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN,"User unauthorized");
+            boolean authorize = authService.isAuthorized(token);
+            if (!authorize) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
             }
+        } catch (NoResultException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Internal server error: " + e.getMessage());
+        }
     }
+
 }

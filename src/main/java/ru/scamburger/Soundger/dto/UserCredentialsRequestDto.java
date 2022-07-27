@@ -3,8 +3,10 @@ package ru.scamburger.Soundger.dto;
 import lombok.Data;
 
 @Data
-public class UserCredentialsDto {
+public class UserCredentialsRequestDto {
+
     String username;
+    
     String password;
 
 }

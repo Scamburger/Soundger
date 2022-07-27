@@ -1,14 +1,9 @@
 package ru.scamburger.Soundger.entity;
 
-import lombok.Data;
-import org.springframework.stereotype.Component;
-
-import javax.sound.sampled.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
 
 public class FileService {
 
@@ -22,5 +17,5 @@ public class FileService {
             fos.write(array);
         }
     }
-}
 
+}

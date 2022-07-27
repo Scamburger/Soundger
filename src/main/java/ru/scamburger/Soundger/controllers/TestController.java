@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.scamburger.Soundger.exception.UnauthorizedException;
 import ru.scamburger.Soundger.service.AuthService;
+import ru.scamburger.Soundger.annotation.Authorized;
 import ru.scamburger.Soundger.entity.User;
 
 import javax.persistence.EntityManager;
@@ -37,7 +38,7 @@ public class TestController {
         user.setUsername("root");
         user.setPassword("root");
         entityManager.merge(user);
-        return "I hate niggers and ukraine!";
+        return "I hate java";
     }
 
     @GetMapping("/addauthtoken")
@@ -62,10 +63,14 @@ public class TestController {
     }
 
     @GetMapping("/logout")
+    @Authorized
     public String logout(){
-        authService.logout("342af481-e953-44c3-974f-8151717b06c1");
+        try {
+            authService.logout();
+        } catch (UnauthorizedException e) {
+            return "error occupied";
+        }
         return "logouted";
     }
-
 
 }
