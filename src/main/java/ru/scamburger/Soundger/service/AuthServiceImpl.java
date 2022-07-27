@@ -1,9 +1,6 @@
 package ru.scamburger.Soundger.service;
 
 import org.jasypt.util.password.PasswordEncryptor;
-import org.jasypt.util.password.StrongPasswordEncryptor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.scamburger.Soundger.dao.AuthTokenDao;
@@ -36,7 +33,7 @@ public class AuthServiceImpl implements AuthService {
     public AuthToken authorize(String username, String password) throws UnauthorizedException {
         AuthToken authToken = null;
         User user = userDao.getUserByUsername(username);
-        if (!passwordEncryptor.checkPassword(password,user.getPassword())) {
+        if (!passwordEncryptor.checkPassword(password, user.getPassword())) {
             throw new UnauthorizedException();
         }
         if (user.getAuthToken() != null) {
@@ -79,9 +76,5 @@ public class AuthServiceImpl implements AuthService {
         return authorizedUser;
     }
 
-    @Bean
-    public static StrongPasswordEncryptor getEncryptor() {
-       return new StrongPasswordEncryptor();
-    }
 
 }
