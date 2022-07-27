@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class AuthTokenResponseDto {
 
-    String token;
+    public String token;
 
 }
