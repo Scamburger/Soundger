@@ -21,4 +21,5 @@ public class AuthToken {
     private String token;
 
     private Date expiredAt;
+
 }
