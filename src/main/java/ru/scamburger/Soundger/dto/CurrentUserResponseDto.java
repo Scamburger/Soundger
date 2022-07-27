@@ -1,6 +1,7 @@
 package ru.scamburger.Soundger.dto;
 
 import lombok.Data;
+import ru.scamburger.Soundger.entity.User;
 
 @Data
 public class CurrentUserResponseDto {
@@ -9,8 +10,8 @@ public class CurrentUserResponseDto {
 
     private String username;
 
-    public CurrentUserResponseDto(Long id, String username) {
-        this.id = id;
-        this.username = username;
+    public CurrentUserResponseDto(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
     }
 }

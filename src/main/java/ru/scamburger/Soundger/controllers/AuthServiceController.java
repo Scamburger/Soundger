@@ -55,6 +55,6 @@ public class AuthServiceController {
     @Authorized
     public ResponseEntity<CurrentUserResponseDto> current() {
         User currentUser = authService.getCurrentUser();
-        return new ResponseEntity<>(new CurrentUserResponseDto(currentUser.getId(), currentUser.getUsername()), HttpStatus.OK);
+        return new ResponseEntity<>(new CurrentUserResponseDto(currentUser), HttpStatus.OK);
     }
 }
