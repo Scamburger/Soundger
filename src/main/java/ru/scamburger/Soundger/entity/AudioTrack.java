@@ -12,6 +12,7 @@ public class AudioTrack {
         private Long id;
 
         @ManyToOne (cascade = CascadeType.ALL)
+        @JoinColumn(name = "uploaded_by_user_id")
         private User user;
 
         private String filePath;

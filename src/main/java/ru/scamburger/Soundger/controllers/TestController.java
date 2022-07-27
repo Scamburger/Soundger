@@ -2,6 +2,7 @@ package ru.scamburger.Soundger.controllers;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.scamburger.Soundger.entity.AudioTrack;
 import ru.scamburger.Soundger.exception.UnauthorizedException;
@@ -76,10 +77,11 @@ public class TestController {
     @GetMapping("/addAudioTrack")
     @Authorized
     @Transactional
-    public String addAudioTrack(String filePath){
+    public String addAudioTrack(@RequestParam String filePath){
         AudioTrack audioTrack = new AudioTrack();
         audioTrack.setUser(authService.getCurrentUser());
         audioTrack.setLength(11);
+        audioTrack.setFilePath(filePath);
         entityManager.merge(audioTrack);
         return "Oka";
     }
