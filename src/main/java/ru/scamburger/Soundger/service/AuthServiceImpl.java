@@ -1,5 +1,6 @@
 package ru.scamburger.Soundger.service;
 
+import org.jasypt.util.password.PasswordEncryptor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.scamburger.Soundger.dao.AuthTokenDao;
@@ -20,17 +21,19 @@ public class AuthServiceImpl implements AuthService {
     private final int tokenLifetimeInMilliseconds = 1000 * 60 * 60 * 24;
 
     private User authorizedUser;
+    private final PasswordEncryptor passwordEncryptor;
 
-    public AuthServiceImpl(UserDao userDao, AuthTokenDao authTokenDao) {
+    public AuthServiceImpl(UserDao userDao, AuthTokenDao authTokenDao, PasswordEncryptor passwordEncryptor) {
         this.userDao = userDao;
         this.authTokenDao = authTokenDao;
+        this.passwordEncryptor = passwordEncryptor;
     }
 
     @Override
     public AuthToken authorize(String username, String password) throws UnauthorizedException {
         AuthToken authToken = null;
         User user = userDao.getUserByUsername(username);
-        if (!user.getPassword().equals(password)) {
+        if (!passwordEncryptor.checkPassword(password, user.getPassword())) {
             throw new UnauthorizedException();
         }
         if (user.getAuthToken() != null) {
@@ -72,5 +75,6 @@ public class AuthServiceImpl implements AuthService {
     public User getCurrentUser() {
         return authorizedUser;
     }
+
 
 }
