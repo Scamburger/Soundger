@@ -9,20 +9,22 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 @Repository
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
+
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
     public User getUserByUsername(String username) throws NoResultException {
-        return (User)entityManager.createQuery("select u from User as u where u.username = :usernameParam")
-                .setParameter("usernameParam",username)
+        return (User) entityManager.createQuery("select u from User as u where u.username = :usernameParam")
+                .setParameter("usernameParam", username)
                 .getSingleResult();
     }
 
     @Override
     @Transactional
-    public void saveUser(User user){
+    public void saveUser(User user) {
         entityManager.merge(user);
     }
+    
 }
