@@ -3,7 +3,7 @@ package ru.scamburger.Soundger.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-//fuck
+//fuckk
 @Entity
 @Data
 public class AudioTrack {
