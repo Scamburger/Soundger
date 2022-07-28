@@ -1,5 +1,6 @@
-package ru.scamburger.Soundger.security;
+package ru.scamburger.Soundger.configuration;
 
+import org.jasypt.util.password.PasswordEncryptor;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class WebSecurityConfiguration {
 
     @Bean
-    public static StrongPasswordEncryptor getEncryptor() {
+    public static PasswordEncryptor getEncryptor() {
         return new StrongPasswordEncryptor();
     }
 }
