@@ -20,11 +20,11 @@ public class PhysicalFileStorageProvider implements FileStorageProvider {
         }
     }
 
-    public boolean saveFile(long id, byte[] array) {
+    public boolean saveFile(long id, byte[] content) {
         try {
             String path = getFullPath(id).toString();
             try (FileOutputStream fos = new FileOutputStream(path)) {
-                fos.write(array);
+                fos.write(content);
             }
             return true;
         } catch (IOException e) {
