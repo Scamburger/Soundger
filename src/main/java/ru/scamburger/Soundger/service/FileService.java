@@ -1,4 +1,4 @@
-package ru.scamburger.Soundger.entity;
+package ru.scamburger.Soundger.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
