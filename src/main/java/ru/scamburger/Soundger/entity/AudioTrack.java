@@ -15,6 +15,8 @@ public class AudioTrack {
         @JoinColumn(name = "uploaded_by_user_id")
         private User user;
 
+        private String name;
+
         private String filePath;
 
         private int length;

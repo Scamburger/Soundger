@@ -81,6 +81,7 @@ public class TestController {
         AudioTrack audioTrack = new AudioTrack();
         audioTrack.setUser(authService.getCurrentUser());
         audioTrack.setLength(11);
+        audioTrack.setName("John Denver - Country Road");
         audioTrack.setFilePath(filePath);
         entityManager.merge(audioTrack);
         return "Oka";
