@@ -17,8 +17,6 @@ public class AudioTrack {
 
         private String name;
 
-        private String filePath;
-
         private int length;
 
 }
