@@ -77,12 +77,11 @@ public class TestController {
     @GetMapping("/addAudioTrack")
     @Authorized
     @Transactional
-    public String addAudioTrack(@RequestParam String filePath){
+    public String addAudioTrack(){
         AudioTrack audioTrack = new AudioTrack();
         audioTrack.setUser(authService.getCurrentUser());
         audioTrack.setLength(11);
         audioTrack.setName("John Denver - Country Road");
-        audioTrack.setFilePath(filePath);
         entityManager.merge(audioTrack);
         return "Oka";
     }
